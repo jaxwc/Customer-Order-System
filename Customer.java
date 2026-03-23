@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+/** customers account in the COS */
 public class Customer {
   private String customerID;
   private String password;
@@ -11,6 +12,17 @@ public class Customer {
   private boolean loggedIn;
   private List<Order> orders;
 
+  /**
+   * creates a customer with account and profile information
+   *
+   * @param customerID unique customer ID
+   * @param password customers password
+   * @param name customers name
+   * @param address customers address
+   * @param creditCardNum customers credit card number
+   * @param securityQuestion selected security question
+   * @param securityAnswer answer to secruity question
+   */
   public Customer(
       String customerID,
       String password,
@@ -18,8 +30,7 @@ public class Customer {
       String address,
       String creditCardNum,
       String securityQuestion,
-      String securityAnswer,
-      boolean loggedIn) {
+      String securityAnswer) {
     this.customerID = customerID;
     this.password = password;
     this.name = name;
@@ -31,26 +42,44 @@ public class Customer {
     this.orders = new ArrayList<>();
   }
 
+  /**
+   * @return customer ID
+   */
   public String getCustomerID() {
     return customerID;
   }
 
+  /**
+   * @return customers name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * @return customers address
+   */
   public String getAddress() {
     return address;
   }
 
+  /**
+   * @return customers credit card number
+   */
   public String getCreditCardNum() {
     return creditCardNum;
   }
 
+  /**
+   * @return customers security question
+   */
   public String getSecurityQeustion() {
     return securityQuestion;
   }
 
+  /**
+   * @return return true if the customer is logged in otherwise return false
+   */
   public boolean isLoggedIn() {
     return loggedIn;
   }

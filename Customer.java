@@ -101,7 +101,7 @@ public class Customer {
    * @return return true if the answer matches otherwise return false
    */
   public boolean verifySecurityAnswer(String enteredAnswer) {
-    return securityAnswer.equals(enteredAnswer);
+    return securityAnswer.equalsIgnoreCase(enteredAnswer);
   }
 
   /** customer is logged in */

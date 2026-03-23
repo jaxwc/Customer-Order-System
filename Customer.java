@@ -84,7 +84,33 @@ public class Customer {
     return loggedIn;
   }
 
+  /**
+   * checks the entered password to see if it matches the stored password
+   *
+   * @param enteredPassword the password entered by the customer
+   * @return return ture if the password matches otherwise return false
+   */
   public boolean verifyPassword(String enteredPassword) {
     return password.equals(enteredPassword);
+  }
+
+  /**
+   * checks the entered answer for the security question to see if it matches the stored password
+   *
+   * @param enteredAnswer the answer to the security question entered by the customer
+   * @return return true if the answer matches otherwise return false
+   */
+  public boolean verifySecurityAnswer(String enteredAnswer) {
+    return securityAnswer.equals(enteredAnswer);
+  }
+
+  /** customer is logged in */
+  public void logIn() {
+    loggedIn = true;
+  }
+
+  /** customer is logged out */
+  public void logOut() {
+    loggedIn = true;
   }
 }

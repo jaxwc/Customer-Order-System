@@ -27,7 +27,7 @@ public class Customer {
     this.creditCardNum = creditCardNum;
     this.securityQuestion = securityQuestion;
     this.securityAnswer = securityAnswer;
-    this.loggedIn = loggedIn;
+    this.loggedIn = false;
     this.orders = new ArrayList<>();
   }
 
@@ -53,5 +53,9 @@ public class Customer {
 
   public boolean isLoggedIn() {
     return loggedIn;
+  }
+
+  public boolean verifyPassword(String enteredPassword) {
+    return password.equals(enteredPassword);
   }
 }

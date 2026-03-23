@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Customer {
   private String customerID;
   private String password;
@@ -7,6 +9,7 @@ public class Customer {
   private String securityQuestion;
   private String securityAnswer;
   private boolean loggedIn;
+  private List<Order> orders;
 
   public Customer(
       String customerID,
@@ -25,5 +28,30 @@ public class Customer {
     this.securityQuestion = securityQuestion;
     this.securityAnswer = securityAnswer;
     this.loggedIn = loggedIn;
+    this.orders = new ArrayList<>();
+  }
+
+  public String getCustomerID() {
+    return customerID;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public String getCreditCardNum() {
+    return creditCardNum;
+  }
+
+  public String getSecurityQeustion() {
+    return securityQuestion;
+  }
+
+  public boolean isLoggedIn() {
+    return loggedIn;
   }
 }

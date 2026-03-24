@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /** customers account in the COS */
 public class Customer {
@@ -6,7 +7,7 @@ public class Customer {
   private String password;
   private String name;
   private String address;
-  private String creditCardNum;
+  private String creditCard;
   private String securityQuestion;
   private String securityAnswer;
   private boolean loggedIn;
@@ -19,23 +20,23 @@ public class Customer {
    * @param password customers password
    * @param name customers name
    * @param address customers address
-   * @param creditCardNum customers credit card number
+   * @param creditCard customers credit card number
    * @param securityQuestion selected security question
-   * @param securityAnswer answer to secruity question
+   * @param securityAnswer answer to security question
    */
   public Customer(
       String customerID,
       String password,
       String name,
       String address,
-      String creditCardNum,
+      String creditCard,
       String securityQuestion,
       String securityAnswer) {
     this.customerID = customerID;
     this.password = password;
     this.name = name;
     this.address = address;
-    this.creditCardNum = creditCardNum;
+    this.creditCard = creditCard;
     this.securityQuestion = securityQuestion;
     this.securityAnswer = securityAnswer;
     this.loggedIn = false;
@@ -66,14 +67,14 @@ public class Customer {
   /**
    * @return customers credit card number
    */
-  public String getCreditCardNum() {
-    return creditCardNum;
+  public String getCreditCard() {
+    return creditCard;
   }
 
   /**
    * @return customers security question
    */
-  public String getSecurityQeustion() {
+  public String getSecurityQuestion() {
     return securityQuestion;
   }
 
@@ -88,14 +89,14 @@ public class Customer {
    * checks the entered password to see if it matches the stored password
    *
    * @param enteredPassword the password entered by the customer
-   * @return return ture if the password matches otherwise return false
+   * @return return true if the password matches otherwise return false
    */
   public boolean verifyPassword(String enteredPassword) {
     return password.equals(enteredPassword);
   }
 
   /**
-   * checks the entered answer for the security question to see if it matches the stored password
+   * checks the entered answer for the security question to see if it matches the stored answer
    *
    * @param enteredAnswer the answer to the security question entered by the customer
    * @return return true if the answer matches otherwise return false
@@ -111,6 +112,37 @@ public class Customer {
 
   /** customer is logged out */
   public void logOut() {
-    loggedIn = true;
+    loggedIn = false;
+  }
+
+  /**
+   * puts a new order in the customers order list
+   *
+   * @param order the order to add
+   */
+  public void addOrder(Order order) {
+    if (order != null) {
+      orders.add(order);
+    }
+  }
+
+  /**
+   * returns the customers order list
+   *
+   * @return returns the customers order
+   */
+  public List<Order> getOrders() {
+    return new ArrayList<>(orders);
+  }
+
+  /**
+   * updates customers credit card Number
+   *
+   * @param newCard the new credit card number
+   */
+  public void updateCreditCard(String newCard) {
+    if (newCard != null && !newCard.trim().isEmpty()) {
+      creditCard = newCard;
+    }
   }
 }

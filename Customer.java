@@ -3,7 +3,7 @@ import java.util.List;
 
 /** customers account in the COS */
 public class Customer {
-  private String customerID;
+  private String customerId;
   private String password;
   private String name;
   private String address;
@@ -16,7 +16,7 @@ public class Customer {
   /**
    * creates a customer with account and profile information
    *
-   * @param customerID unique customer ID
+   * @param customerId unique customer Id
    * @param password customers password
    * @param name customers name
    * @param address customers address
@@ -25,14 +25,14 @@ public class Customer {
    * @param securityAnswer answer to security question
    */
   public Customer(
-      String customerID,
+      String customerId,
       String password,
       String name,
       String address,
       String creditCard,
       String securityQuestion,
       String securityAnswer) {
-    this.customerID = customerID;
+    this.customerId = customerId;
     this.password = password;
     this.name = name;
     this.address = address;
@@ -44,10 +44,10 @@ public class Customer {
   }
 
   /**
-   * @return customer ID
+   * @return customer Id
    */
-  public String getCustomerID() {
-    return customerID;
+  public String getCustomerId() {
+    return customerId;
   }
 
   /**

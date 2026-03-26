@@ -24,7 +24,7 @@ public class CartItem {
   /**
    * @return quantity
    */
-  public double getQuantity() {
+  public int getQuantity() {
     return quantity;
   }
 
@@ -36,9 +36,9 @@ public class CartItem {
   }
 
   /**
-   * @return the quantity total
+   * @return line total for this cart item
    */
-  public double getQuantityTotal() {
+  public double getLineTotal() {
     return product.getCurrentPrice() * quantity;
   }
 }

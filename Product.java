@@ -49,7 +49,7 @@ public class Product {
   }
 
   /**
-   * @return sale price if it lower otherwise return regular price
+   * @return sale price if it is lower otherwise return regular price
    */
   public double getCurrentPrice() {
     if (salePrice < regularPrice) {

@@ -44,7 +44,7 @@ public class Customer {
   }
 
   /**
-   * @return customer Id
+   * @return customerId
    */
   public String getCustomerId() {
     return customerId;
@@ -129,14 +129,14 @@ public class Customer {
   /**
    * returns the customers order list
    *
-   * @return returns the customers order
+   * @return returns a copy of the customers order
    */
   public List<Order> getOrders() {
     return new ArrayList<>(orders);
   }
 
   /**
-   * updates customers credit card Number
+   * updates customers credit card number
    *
    * @param newCard the new credit card number
    */

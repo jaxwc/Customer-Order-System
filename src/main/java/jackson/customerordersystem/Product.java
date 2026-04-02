@@ -1,3 +1,5 @@
+package jackson.customerordersystem;
+
 /** product in the COS */
 public class Product {
   private String name;

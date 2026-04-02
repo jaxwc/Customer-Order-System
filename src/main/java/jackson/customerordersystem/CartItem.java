@@ -1,3 +1,5 @@
+package jackson.customerordersystem;
+
 /** items in cart */
 public class CartItem {
   private Product product;

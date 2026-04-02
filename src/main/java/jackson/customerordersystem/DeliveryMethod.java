@@ -1,3 +1,5 @@
+package jackson.customerordersystem;
+
 /** delivery options for customer orders */
 public enum DeliveryMethod {
   MAIL(3.00),

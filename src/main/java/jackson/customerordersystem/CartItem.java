@@ -44,7 +44,9 @@ public class CartItem {
    * @param quantity gets the quantity of the product
    */
   public void setQuantity(int quantity) {
-    this.quantity = quantity;
+    if (quantity > 0) {
+      this.quantity = quantity;
+    }
   }
 
   /**

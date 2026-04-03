@@ -14,6 +14,7 @@ public class CustomerOrderSystem {
   private final ShoppingCart shoppingCart;
   private final Bank bank;
   private Customer currentCustomer;
+  private Customer pendingLoginCustomer;
   private int failedLoginAttempts;
   private String lastLoginCustomerId;
 
@@ -24,6 +25,7 @@ public class CustomerOrderSystem {
     securityQuestions = new ArrayList<>();
     shoppingCart = new ShoppingCart();
     currentCustomer = null;
+    pendingLoginCustomer = null;
     bank = new Bank();
     failedLoginAttempts = 0;
     lastLoginCustomerId = null;
@@ -167,6 +169,7 @@ public class CustomerOrderSystem {
     Customer customer = findCustomerById(customerId);
 
     if (customer == null) {
+      pendingLoginCustomer = null;
       return null;
     }
 
@@ -176,38 +179,42 @@ public class CustomerOrderSystem {
     }
 
     if (failedLoginAttempts >= MAX_LOGIN_ATTEMPTS) {
+      pendingLoginCustomer = null;
       return null;
     }
 
     if (!customer.verifyPassword(password)) {
       failedLoginAttempts++;
+      pendingLoginCustomer = null;
       return null;
     }
+
+    pendingLoginCustomer = customer;
     return customer.getSecurityQuestion();
   }
 
   /**
    * verifies security answer and logs the customer in
    *
-   * @param customerId customers id
-   * @param securityAnswer enetered answer to the security question
+   * @param securityAnswer entered answer to the security question
    * @return true if the security answer is correct and logs in other wise returns false
    */
-  public boolean finishLogOn(String customerId, String securityAnswer) {
-    Customer customer = findCustomerById(customerId);
+  public boolean finishLogOn(String securityAnswer) {
 
-    if (customer == null) {
+    if (pendingLoginCustomer == null) {
       return false;
     }
 
-    if (!customer.verifySecurityAnswer(securityAnswer)) {
+    if (!pendingLoginCustomer.verifySecurityAnswer(securityAnswer)) {
+      pendingLoginCustomer = null;
       failedLoginAttempts = 0;
       lastLoginCustomerId = null;
       return false;
     }
 
-    customer.logIn();
-    currentCustomer = customer;
+    pendingLoginCustomer.logIn();
+    currentCustomer = pendingLoginCustomer;
+    pendingLoginCustomer = null;
     failedLoginAttempts = 0;
     lastLoginCustomerId = null;
     return true;
@@ -219,6 +226,9 @@ public class CustomerOrderSystem {
       currentCustomer.logOut();
       currentCustomer = null;
     }
+    pendingLoginCustomer = null;
+    failedLoginAttempts = 0;
+    lastLoginCustomerId = null;
   }
 
   /**

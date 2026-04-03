@@ -116,6 +116,9 @@ public class Customer {
    * @return return true if the answer matches otherwise return false
    */
   public boolean verifySecurityAnswer(String enteredAnswer) {
+    if (enteredAnswer == null) {
+      return false;
+    }
     return securityAnswer.equalsIgnoreCase(enteredAnswer);
   }
 

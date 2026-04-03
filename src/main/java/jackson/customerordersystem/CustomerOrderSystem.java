@@ -27,7 +27,6 @@ public class CustomerOrderSystem {
     pendingLoginCustomer = null;
     bank = new Bank();
     failedLoginAttempts = 0;
-    lastLoginCustomerId = null;
 
     securityQuestions.add("What is your favorite color?");
     securityQuestions.add("What city were you born in?");
@@ -138,7 +137,7 @@ public class CustomerOrderSystem {
       return false;
     }
 
-    if (creditCard == null || creditCard.trim().isEmpty()) {
+    if (!bank.isValidCreditCard(creditCard)) {
       return false;
     }
 
@@ -291,10 +290,10 @@ public class CustomerOrderSystem {
     if (shoppingCart.isEmpty() || deliveryMethod == null) {
       return null;
     }
-
-    if (newCreditCard == null || newCreditCard.trim().isEmpty()) {
+    if (!bank.isValidCreditCard(newCreditCard)) {
       return null;
     }
+
     double subtotal = shoppingCart.getSubtotal();
     double tax = shoppingCart.getTax();
     double deliveryFee = deliveryMethod.getFee();

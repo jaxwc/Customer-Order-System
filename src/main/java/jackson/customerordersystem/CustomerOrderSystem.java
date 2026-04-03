@@ -16,7 +16,6 @@ public class CustomerOrderSystem {
   private Customer currentCustomer;
   private Customer pendingLoginCustomer;
   private int failedLoginAttempts;
-  private String lastLoginCustomerId;
 
   /** create the customer order system */
   public CustomerOrderSystem() {
@@ -173,11 +172,6 @@ public class CustomerOrderSystem {
       return null;
     }
 
-    if (lastLoginCustomerId == null || !lastLoginCustomerId.equalsIgnoreCase(customerId)) {
-      failedLoginAttempts = 0;
-      lastLoginCustomerId = customerId;
-    }
-
     if (failedLoginAttempts >= MAX_LOGIN_ATTEMPTS) {
       pendingLoginCustomer = null;
       return null;
@@ -207,8 +201,6 @@ public class CustomerOrderSystem {
 
     if (!pendingLoginCustomer.verifySecurityAnswer(securityAnswer)) {
       pendingLoginCustomer = null;
-      failedLoginAttempts = 0;
-      lastLoginCustomerId = null;
       return false;
     }
 
@@ -216,7 +208,6 @@ public class CustomerOrderSystem {
     currentCustomer = pendingLoginCustomer;
     pendingLoginCustomer = null;
     failedLoginAttempts = 0;
-    lastLoginCustomerId = null;
     return true;
   }
 
@@ -228,7 +219,6 @@ public class CustomerOrderSystem {
     }
     pendingLoginCustomer = null;
     failedLoginAttempts = 0;
-    lastLoginCustomerId = null;
   }
 
   /**

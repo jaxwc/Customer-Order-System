@@ -27,16 +27,16 @@ public class Bank {
   }
 
   /**
-   * checks if a charge is approved
+   * checks if credit card number is valid
    *
-   * @param creditCard customers credit card number
-   * @param amount amount of the customers order
-   * @return true if the charge is approved other wise return false
+   * @param creditCard customers credit card
+   * @return true if credit card is 16 digits otherwise return false
    */
-  private boolean isApproved(String creditCard, double amount) {
+  public boolean isValidCreditCard(String creditCard) {
     if (creditCard == null) {
       return false;
     }
+
     String trimmedCard = creditCard.trim();
 
     if (trimmedCard.length() != 16) {
@@ -48,7 +48,18 @@ public class Bank {
         return false;
       }
     }
-    return amount > 0 && amount <= CREDIT_LIMIT;
+    return true;
+  }
+
+  /**
+   * checks if a charge is approved
+   *
+   * @param creditCard customers credit card number
+   * @param amount amount of the customers order
+   * @return true if the charge is approved other wise return false
+   */
+  private boolean isApproved(String creditCard, double amount) {
+    return isValidCreditCard(creditCard) && amount > 0 && amount <= CREDIT_LIMIT;
   }
 
   /**

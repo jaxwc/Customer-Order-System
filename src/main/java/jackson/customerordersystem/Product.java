@@ -1,11 +1,11 @@
 package jackson.customerordersystem;
 
-/** product in the COS */
+/** product in the customer order system */
 public class Product {
-  private String name;
-  private String description;
-  private double regularPrice;
-  private double salePrice;
+  private final String name;
+  private final String description;
+  private final double regularPrice;
+  private final double salePrice;
 
   /**
    * creates a product with product information
@@ -23,6 +23,8 @@ public class Product {
   }
 
   /**
+   * returns the product name
+   *
    * @return product name
    */
   public String getName() {
@@ -30,27 +32,35 @@ public class Product {
   }
 
   /**
-   * @return description of product
+   * returns product description
+   *
+   * @return prodcut descritption
    */
   public String getDescription() {
     return description;
   }
 
   /**
-   * @return regular price of product
+   * returns reglar price of the product
+   *
+   * @return regular price
    */
   public double getRegularPrice() {
     return regularPrice;
   }
 
   /**
-   * @return sale price of product
+   * returns sale price of product
+   *
+   * @return sale price
    */
   public double getSalePrice() {
     return salePrice;
   }
 
   /**
+   * returns the price the system will you use for the product
+   *
    * @return sale price if it is lower otherwise return regular price
    */
   public double getCurrentPrice() {

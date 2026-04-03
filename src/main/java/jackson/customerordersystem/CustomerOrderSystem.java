@@ -4,18 +4,20 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/** main system class to put the customer order system together */
 public class CustomerOrderSystem {
   private static final int MAX_LOGIN_ATTEMPTS = 3;
 
-  private List<Customer> customers;
-  private List<Product> catalog;
-  private List<String> securityQuestions;
-  private ShoppingCart shoppingCart;
+  private final List<Customer> customers;
+  private final List<Product> catalog;
+  private final List<String> securityQuestions;
+  private final ShoppingCart shoppingCart;
+  private final Bank bank;
   private Customer currentCustomer;
-  private Bank bank;
   private int failedLoginAttempts;
   private String lastLoginCustomerId;
 
+  /** create the customer order system */
   public CustomerOrderSystem() {
     customers = new ArrayList<>();
     catalog = new ArrayList<>();
@@ -31,20 +33,40 @@ public class CustomerOrderSystem {
     securityQuestions.add("What was the name of your first pet?");
   }
 
+  /**
+   * returns available security questions
+   *
+   * @return copy of security questions
+   */
   public List<String> getSecurityQuestions() {
     return new ArrayList<>(securityQuestions);
   }
 
+  /**
+   * adds product to the catalog
+   *
+   * @param product add product
+   */
   public void addProductToCatalog(Product product) {
     if (product != null) {
       catalog.add(product);
     }
   }
 
+  /**
+   * returns product catalog
+   *
+   * @return copy of catalog
+   */
   public List<Product> getCatalog() {
     return new ArrayList<>(catalog);
   }
 
+  /**
+   * checks if a customer id is available
+   *
+   * @return true if id is available otherwise return false
+   */
   public boolean isCustomerIdAvailable(String customerId) {
     if (customerId == null || customerId.trim().isEmpty()) {
       return false;
@@ -52,6 +74,12 @@ public class CustomerOrderSystem {
     return findCustomerById(customerId) == null;
   }
 
+  /**
+   * checks if the password follows the rules
+   *
+   * @param password password to check
+   * @return true if password is valid otherwise return false
+   */
   public boolean isValidPassword(String password) {
     if (password == null || password.length() < 6) {
       return false;
@@ -75,6 +103,18 @@ public class CustomerOrderSystem {
     return hasDigit && hasUpperCase && hasSpecial;
   }
 
+  /**
+   * creates new customer account
+   *
+   * @param customerId customer id
+   * @param password customer password
+   * @param name customer name
+   * @param address customer address
+   * @param creditCard customer credit card
+   * @param securityQuestion selected security question
+   * @param securityAnswer answer to the security question
+   * @return true if account is created otherwise return false
+   */
   public boolean createAccount(
       String customerId,
       String password,
@@ -115,11 +155,19 @@ public class CustomerOrderSystem {
     return true;
   }
 
-  public boolean logOn(String customerId, String password, String securityAnswer) {
+  /**
+   * attempts to log a customer in to the system, verifies customer id and password
+   *
+   * @param customerId entered customer id
+   * @param password entered customer password
+   * @return customers security question of credentials are valid otherwise returns null if invalid
+   *     or are locked out
+   */
+  public String beginLogOn(String customerId, String password) {
     Customer customer = findCustomerById(customerId);
 
     if (customer == null) {
-      return false;
+      return null;
     }
 
     if (lastLoginCustomerId == null || !lastLoginCustomerId.equalsIgnoreCase(customerId)) {
@@ -128,13 +176,30 @@ public class CustomerOrderSystem {
     }
 
     if (failedLoginAttempts >= MAX_LOGIN_ATTEMPTS) {
-      return false;
+      return null;
     }
 
     if (!customer.verifyPassword(password)) {
       failedLoginAttempts++;
+      return null;
+    }
+    return customer.getSecurityQuestion();
+  }
+
+  /**
+   * verifies security answer and logs the customer in
+   *
+   * @param customerId customers id
+   * @param securityAnswer enetered answer to the security question
+   * @return true if the security answer is correct and logs in other wise returns false
+   */
+  public boolean finishLogOn(String customerId, String securityAnswer) {
+    Customer customer = findCustomerById(customerId);
+
+    if (customer == null) {
       return false;
     }
+
     if (!customer.verifySecurityAnswer(securityAnswer)) {
       failedLoginAttempts = 0;
       lastLoginCustomerId = null;
@@ -148,6 +213,7 @@ public class CustomerOrderSystem {
     return true;
   }
 
+  /** logs out the current customer */
   public void logOut() {
     if (currentCustomer != null) {
       currentCustomer.logOut();
@@ -155,6 +221,13 @@ public class CustomerOrderSystem {
     }
   }
 
+  /**
+   * adds the selected product and the quantity of the product to the cart
+   *
+   * @param productName selected product name
+   * @param quantity quantity of the product
+   * @return true if the item is added otherwise return false
+   */
   public boolean selectItem(String productName, int quantity) {
     Product product = findProductByName(productName);
 
@@ -165,6 +238,12 @@ public class CustomerOrderSystem {
     return true;
   }
 
+  /**
+   * places an order using the customers credit card
+   *
+   * @param deliveryMethod customers selected delivery method
+   * @return complete order if it is successful otherwise return null
+   */
   public Order makeOrder(DeliveryMethod deliveryMethod) {
     if (currentCustomer == null || !currentCustomer.isLoggedIn()) {
       return null;
@@ -198,6 +277,13 @@ public class CustomerOrderSystem {
     return order;
   }
 
+  /**
+   * places an order with customers new credit card if there was a failed charge
+   *
+   * @param deliveryMethod selected delivery method
+   * @param newCreditCard customer new credit card number
+   * @return complete order if it sucessful otherwise null
+   */
   public Order makeOrderWithNewCard(DeliveryMethod deliveryMethod, String newCreditCard) {
     if (currentCustomer == null || !currentCustomer.isLoggedIn()) {
       return null;
@@ -238,6 +324,11 @@ public class CustomerOrderSystem {
     return order;
   }
 
+  /**
+   * returns the current customers orders
+   *
+   * @return order history for the customer that is logged in or an empty list
+   */
   public List<Order> viewOrders() {
     if (currentCustomer == null || !currentCustomer.isLoggedIn()) {
       return new ArrayList<>();
@@ -245,14 +336,30 @@ public class CustomerOrderSystem {
     return currentCustomer.getOrders();
   }
 
+  /**
+   * returns the customers current shopping cart
+   *
+   * @return customers current shopping cart
+   */
   public ShoppingCart getShoppingCart() {
     return shoppingCart;
   }
 
+  /**
+   * returns the current customer that is logged in
+   *
+   * @return current customer
+   */
   public Customer getCurrentCustomer() {
     return currentCustomer;
   }
 
+  /**
+   * finds a customer by the customer id
+   *
+   * @param customerId customer id to search for
+   * @return matching customer to customer id or null if not found
+   */
   private Customer findCustomerById(String customerId) {
     for (Customer customer : customers) {
       if (customer.getCustomerId().equalsIgnoreCase(customerId)) {
@@ -262,6 +369,12 @@ public class CustomerOrderSystem {
     return null;
   }
 
+  /**
+   * finds a product by product name
+   *
+   * @param productName product name to search for
+   * @return matching product or return null if not found
+   */
   private Product findProductByName(String productName) {
     for (Product product : catalog) {
       if (product.getName().equalsIgnoreCase(productName)) {

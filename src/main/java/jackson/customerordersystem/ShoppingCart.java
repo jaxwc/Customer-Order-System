@@ -6,7 +6,7 @@ import java.util.List;
 /** tax rate and total price of shopping cart */
 public class ShoppingCart {
   private static final double TAX_RATE = .0825;
-  private List<CartItem> items;
+  private final List<CartItem> items;
 
   /** creates an empty shopping cart */
   public ShoppingCart() {

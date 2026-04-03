@@ -5,15 +5,15 @@ import java.util.List;
 
 /** customers account in the COS */
 public class Customer {
-  private String customerId;
-  private String password;
-  private String name;
-  private String address;
+  private final String customerId;
+  private final String password;
+  private final String name;
+  private final String address;
   private String creditCard;
-  private String securityQuestion;
-  private String securityAnswer;
+  private final String securityQuestion;
+  private final String securityAnswer;
   private boolean loggedIn;
-  private List<Order> orders;
+  private final List<Order> orders;
 
   /**
    * creates a customer with account and profile information
@@ -46,6 +46,8 @@ public class Customer {
   }
 
   /**
+   * returns customer id
+   *
    * @return customerId
    */
   public String getCustomerId() {
@@ -53,6 +55,8 @@ public class Customer {
   }
 
   /**
+   * returns customer name
+   *
    * @return customers name
    */
   public String getName() {
@@ -60,6 +64,8 @@ public class Customer {
   }
 
   /**
+   * returns customer address
+   *
    * @return customers address
    */
   public String getAddress() {
@@ -67,6 +73,8 @@ public class Customer {
   }
 
   /**
+   * returns customer customer credit card number
+   *
    * @return customers credit card number
    */
   public String getCreditCard() {
@@ -74,6 +82,8 @@ public class Customer {
   }
 
   /**
+   * returns customer security question
+   *
    * @return customers security question
    */
   public String getSecurityQuestion() {
@@ -81,6 +91,8 @@ public class Customer {
   }
 
   /**
+   * checks if customer is logged in
+   *
    * @return return true if the customer is logged in otherwise return false
    */
   public boolean isLoggedIn() {

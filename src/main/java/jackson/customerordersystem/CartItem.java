@@ -2,7 +2,7 @@ package jackson.customerordersystem;
 
 /** items in cart */
 public class CartItem {
-  private Product product;
+  private final Product product;
   private int quantity;
 
   /**
@@ -13,10 +13,16 @@ public class CartItem {
    */
   public CartItem(Product product, int quantity) {
     this.product = product;
-    this.quantity = quantity;
+    if (quantity > 0) {
+      this.quantity = quantity;
+    } else {
+      this.quantity = 1;
+    }
   }
 
   /**
+   * returns the product in the cart item
+   *
    * @return product
    */
   public Product getProduct() {
@@ -24,6 +30,8 @@ public class CartItem {
   }
 
   /**
+   * returns the quantity of the product
+   *
    * @return quantity
    */
   public int getQuantity() {
@@ -31,6 +39,8 @@ public class CartItem {
   }
 
   /**
+   * updates the quantity of the product
+   *
    * @param quantity gets the quantity of the product
    */
   public void setQuantity(int quantity) {
@@ -38,7 +48,9 @@ public class CartItem {
   }
 
   /**
-   * @return line total for this cart item
+   * calculates line total for cart item
+   *
+   * @return line total
    */
   public double getLineTotal() {
     return product.getCurrentPrice() * quantity;

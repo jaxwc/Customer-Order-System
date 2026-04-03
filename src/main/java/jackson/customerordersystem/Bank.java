@@ -4,7 +4,8 @@ import java.util.Random;
 
 /** bank is used for charging customer orders */
 public class Bank {
-  private Random random;
+  private static final double CREDIT_LIMIT = 5000.00;
+  private final Random random;
 
   /** creates a bank */
   public Bank() {
@@ -12,7 +13,7 @@ public class Bank {
   }
 
   /**
-   * charges the credit car for the amount of the order
+   * charges the credit card for the amount of the order
    *
    * @param creditCard customers credit card number
    * @param amount amount of the customers order
@@ -32,8 +33,22 @@ public class Bank {
    * @param amount amount of the customers order
    * @return true if the charge is approved other wise return false
    */
-  public boolean isApproved(String creditCard, double amount) {
-    return creditCard != null && !creditCard.trim().isEmpty() && amount > 0;
+  private boolean isApproved(String creditCard, double amount) {
+    if (creditCard == null) {
+      return false;
+    }
+    String trimmedCard = creditCard.trim();
+
+    if (trimmedCard.length() != 16) {
+      return false;
+    }
+
+    for (int i = 0; i < trimmedCard.length(); i++) {
+      if (!Character.isDigit(trimmedCard.charAt(i))) {
+        return false;
+      }
+    }
+    return amount > 0 && amount <= CREDIT_LIMIT;
   }
 
   /**

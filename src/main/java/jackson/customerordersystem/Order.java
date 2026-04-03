@@ -6,15 +6,15 @@ import java.util.List;
 
 /** complete customer order */
 public class Order {
-  private LocalDate orderDate;
-  private String customerId;
-  private List<CartItem> items;
-  private DeliveryMethod deliveryMethod;
-  private double subtotal;
-  private double tax;
-  private double deliveryFee;
-  private double total;
-  private String authNumber;
+  private final LocalDate orderDate;
+  private final String customerId;
+  private final List<CartItem> items;
+  private final DeliveryMethod deliveryMethod;
+  private final double subtotal;
+  private final double tax;
+  private final double deliveryFee;
+  private final double total;
+  private final String authNumber;
 
   /**
    * creates a complete order with all items in the order
@@ -51,6 +51,8 @@ public class Order {
   }
 
   /**
+   * returns order date
+   *
    * @return order date
    */
   public LocalDate getOrderDate() {
@@ -58,6 +60,8 @@ public class Order {
   }
 
   /**
+   * returns customer id for the order
+   *
    * @return customer id
    */
   public String getCustomerId() {
@@ -65,6 +69,8 @@ public class Order {
   }
 
   /**
+   * returns the items
+   *
    * @return copy of items
    */
   public List<CartItem> getItems() {
@@ -72,27 +78,35 @@ public class Order {
   }
 
   /**
-   * @return delivery method selected
+   * returns delivery method selected
+   *
+   * @return delivery method
    */
   public DeliveryMethod getDeliveryMethod() {
     return deliveryMethod;
   }
 
   /**
-   * @return order subtotal
+   * returns order subtotal
+   *
+   * @return subtotal
    */
   public double getSubtotal() {
     return subtotal;
   }
 
   /**
-   * @return tax amount
+   * returns tax amount
+   *
+   * @return tax
    */
   public double getTax() {
     return tax;
   }
 
   /**
+   * returns delivery fee
+   *
    * @return delivery fee
    */
   public double getDeliveryFee() {
@@ -100,6 +114,8 @@ public class Order {
   }
 
   /**
+   * returns final order total
+   *
    * @return order total
    */
   public double getTotal() {
@@ -107,7 +123,9 @@ public class Order {
   }
 
   /**
-   * @return bank auth number
+   * returns the bank auth number
+   *
+   * @return auth number
    */
   public String getAuthNumber() {
     return authNumber;

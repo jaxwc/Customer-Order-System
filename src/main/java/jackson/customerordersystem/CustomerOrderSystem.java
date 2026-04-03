@@ -68,7 +68,7 @@ public class CustomerOrderSystem {
         hasDigit = true;
       } else if (Character.isUpperCase(ch)) {
         hasUpperCase = true;
-      } else if ("@#$%&".indexOf(ch) >= 0) {
+      } else if ("@#$%&*".indexOf(ch) >= 0) {
         hasSpecial = true;
       }
     }
@@ -115,7 +115,7 @@ public class CustomerOrderSystem {
     return true;
   }
 
-  public boolean logOn(String customerId, String password, String secuirtyAnswer) {
+  public boolean logOn(String customerId, String password, String securityAnswer) {
     Customer customer = findCustomerById(customerId);
 
     if (customer == null) {
@@ -135,7 +135,7 @@ public class CustomerOrderSystem {
       failedLoginAttempts++;
       return false;
     }
-    if (!customer.verifySecurityAnswer(secuirtyAnswer)) {
+    if (!customer.verifySecurityAnswer(securityAnswer)) {
       failedLoginAttempts = 0;
       lastLoginCustomerId = null;
       return false;

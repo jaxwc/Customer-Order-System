@@ -5,3 +5,7 @@
 - a list of three security questions
 - order uses LocalDate to configure the date of the order
 - $3.00 fee for mailing orders
+
+# UML Diagram
+
+![setup](assets/UML.png)

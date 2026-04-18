@@ -6,8 +6,6 @@ import java.util.List;
 
 /** main system class to put the customer order system together */
 public class CustomerOrderSystem {
-  private static final int MAX_LOGIN_ATTEMPTS = 3;
-
   private final List<Customer> customers;
   private final List<Product> catalog;
   private final List<String> securityQuestions;
@@ -15,7 +13,6 @@ public class CustomerOrderSystem {
   private final Bank bank;
   private Customer currentCustomer;
   private Customer pendingLoginCustomer;
-  private int failedLoginAttempts;
 
   /** create the customer order system */
   public CustomerOrderSystem() {
@@ -26,7 +23,6 @@ public class CustomerOrderSystem {
     currentCustomer = null;
     pendingLoginCustomer = null;
     bank = new Bank();
-    failedLoginAttempts = 0;
 
     securityQuestions.add("What is your favorite color?");
     securityQuestions.add("What city were you born in?");
@@ -60,6 +56,16 @@ public class CustomerOrderSystem {
    */
   public List<Product> getCatalog() {
     return new ArrayList<>(catalog);
+  }
+
+  /**
+   * checks if customer id is available
+   *
+   * @param customerId customer id to check
+   * @reutrn true if customer exists otherwise return false
+   */
+  public boolean customerExists(String customerId) {
+    return findCustomerById(customerId) != null;
   }
 
   /**
@@ -161,7 +167,6 @@ public class CustomerOrderSystem {
    * @param customerId entered customer id
    * @param password entered customer password
    * @return customers security question of credentials are valid otherwise returns null if invalid
-   *     or are locked out
    */
   public String beginLogOn(String customerId, String password) {
     Customer customer = findCustomerById(customerId);
@@ -171,13 +176,7 @@ public class CustomerOrderSystem {
       return null;
     }
 
-    if (failedLoginAttempts >= MAX_LOGIN_ATTEMPTS) {
-      pendingLoginCustomer = null;
-      return null;
-    }
-
     if (!customer.verifyPassword(password)) {
-      failedLoginAttempts++;
       pendingLoginCustomer = null;
       return null;
     }
@@ -190,7 +189,7 @@ public class CustomerOrderSystem {
    * verifies security answer and logs the customer in
    *
    * @param securityAnswer entered answer to the security question
-   * @return true if the security answer is correct and logs in other wise returns false
+   * @return true if the security answer is correct and logs in otherwise returns false
    */
   public boolean finishLogOn(String securityAnswer) {
 
@@ -203,10 +202,10 @@ public class CustomerOrderSystem {
       return false;
     }
 
+    shoppingCart.clear();
     pendingLoginCustomer.logIn();
     currentCustomer = pendingLoginCustomer;
     pendingLoginCustomer = null;
-    failedLoginAttempts = 0;
     return true;
   }
 
@@ -217,7 +216,7 @@ public class CustomerOrderSystem {
       currentCustomer = null;
     }
     pendingLoginCustomer = null;
-    failedLoginAttempts = 0;
+    shoppingCart.clear();
   }
 
   /**
@@ -281,7 +280,7 @@ public class CustomerOrderSystem {
    *
    * @param deliveryMethod selected delivery method
    * @param newCreditCard customer new credit card number
-   * @return complete order if it sucessful otherwise null
+   * @return complete order if it successful otherwise null
    */
   public Order makeOrderWithNewCard(DeliveryMethod deliveryMethod, String newCreditCard) {
     if (currentCustomer == null || !currentCustomer.isLoggedIn()) {

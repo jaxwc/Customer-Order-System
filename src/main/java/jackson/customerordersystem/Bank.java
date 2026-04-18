@@ -56,10 +56,13 @@ public class Bank {
    *
    * @param creditCard customers credit card number
    * @param amount amount of the customers order
-   * @return true if the charge is approved other wise return false
+   * @return true if the charge is approved otherwise return false
    */
   private boolean isApproved(String creditCard, double amount) {
-    return isValidCreditCard(creditCard) && amount > 0 && amount <= CREDIT_LIMIT;
+    return isValidCreditCard(creditCard)
+        && amount > 0
+        && amount <= CREDIT_LIMIT
+        && !creditCard.endsWith("0000");
   }
 
   /**

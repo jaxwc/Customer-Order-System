@@ -34,14 +34,14 @@ public class Product {
   /**
    * returns product description
    *
-   * @return prodcut descritption
+   * @return product description
    */
   public String getDescription() {
     return description;
   }
 
   /**
-   * returns reglar price of the product
+   * returns regular price of the product
    *
    * @return regular price
    */

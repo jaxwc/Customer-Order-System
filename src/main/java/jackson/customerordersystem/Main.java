@@ -3,7 +3,13 @@ package jackson.customerordersystem;
 import java.util.List;
 import java.util.Scanner;
 
+/** console application for customer order system */
 public class Main {
+  /**
+   * starts the program and displays the main menu
+   *
+   * @param args command line arguments
+   */
   public static void main(String[] args) {
     Scanner input = new Scanner(System.in);
     CustomerOrderSystem system = new CustomerOrderSystem();
@@ -47,6 +53,11 @@ public class Main {
     }
   }
 
+  /**
+   * adds products to the catalog
+   *
+   * @param system customer order system
+   */
   private static void seedCatalog(CustomerOrderSystem system) {
     system.addProductToCatalog(new Product("CPU", "8-core processor", 329.99, 299.99));
     system.addProductToCatalog(new Product("GPU", "12GB graphics card", 699.99, 649.99));
@@ -60,6 +71,11 @@ public class Main {
     system.addProductToCatalog(new Product("CPU Cooler", "Tower air cooler", 59.99, 49.99));
   }
 
+  /**
+   * displays the main menu
+   *
+   * @param system customer order system
+   */
   private static void showMenu(CustomerOrderSystem system) {
     System.out.println();
     System.out.println("--- Customer Order System ---");
@@ -82,6 +98,12 @@ public class Main {
     System.out.print("Enter choice: ");
   }
 
+  /**
+   * creates a new customer account
+   *
+   * @param input scanner for input
+   * @param system customer order system
+   */
   private static void createAccount(Scanner input, CustomerOrderSystem system) {
     System.out.println();
     System.out.println("--- Create Account ---");
@@ -119,6 +141,8 @@ public class Main {
       System.out.println("Credit card number must be exactly 16 digits.");
     }
 
+    System.out.println("Account created successfully.");
+
     List<String> securityQuestions = system.getSecurityQuestions();
     System.out.println("Select a security question:");
     for (int i = 0; i < securityQuestions.size(); i++) {
@@ -142,13 +166,17 @@ public class Main {
         system.createAccount(
             customerId, password, name, address, creditCard, securityQuestion, securityAnswer);
 
-    if (created) {
-      System.out.println("Account created successfully.");
-    } else {
+    if (!created) {
       System.out.println("Account could not be created.");
     }
   }
 
+  /**
+   * logs in a customer
+   *
+   * @param input scanner for input
+   * @param system customer order system
+   */
   private static void logOn(Scanner input, CustomerOrderSystem system) {
     System.out.println();
     System.out.println("--- Log On ---");
@@ -157,17 +185,15 @@ public class Main {
       System.out.println("A customer is already logged in.");
       return;
     }
-
-    String customerId = readNonBlank(input, "Enter customer Id: ");
-
-    if (!system.customerExists(customerId)) {
-      System.out.println("No account found.");
-      return;
-    }
-
     String securityQuestion = null;
 
     for (int attempts = 1; attempts <= 3; attempts++) {
+      String customerId = readNonBlank(input, "Enter customer ID: ");
+
+      if (!system.customerExists(customerId)) {
+        System.out.println("No account found.");
+        return;
+      }
       String password = readNonBlank(input, "Enter password: ");
       securityQuestion = system.beginLogOn(customerId, password);
 
@@ -187,7 +213,7 @@ public class Main {
       return;
     }
 
-    System.out.println("Security Question: " + securityQuestion);
+    System.out.println("Security question: " + securityQuestion);
     String securityAnswer = readNonBlank(input, "Enter security answer: ");
 
     if (system.finishLogOn(securityAnswer)) {
@@ -197,6 +223,11 @@ public class Main {
     }
   }
 
+  /**
+   * logs out current customer
+   *
+   * @param system customer order system
+   */
   private static void logOut(CustomerOrderSystem system) {
     System.out.println();
     System.out.println("--- Log Out ---");
@@ -210,6 +241,12 @@ public class Main {
     System.out.println("Logged out successfully.");
   }
 
+  /**
+   * displays catalog and customer can select items
+   *
+   * @param input scanner for input
+   * @param system customer order system
+   */
   private static void browseAndSelectItems(Scanner input, CustomerOrderSystem system) {
     System.out.println();
     System.out.println("--- Product Catalog ---");
@@ -273,11 +310,18 @@ public class Main {
 
       if (!answer.equalsIgnoreCase("yes")) {
         selecting = false;
+      } else {
+        System.out.println();
       }
     }
     showCart(system);
   }
 
+  /**
+   * displays what is in shopping cart if anything
+   *
+   * @param system customer order system
+   */
   private static void showCart(CustomerOrderSystem system) {
     System.out.println();
     System.out.println("--- Shopping Cart ---");
@@ -295,11 +339,18 @@ public class Main {
           item.getProduct().getName(), item.getQuantity(), item.getLineTotal());
     }
 
+    System.out.println();
     System.out.printf("Subtotal: $%.2f%n", cart.getSubtotal());
     System.out.printf("Tax: $%.2f%n", cart.getTax());
     System.out.printf("Total: $%.2f%n", cart.getTotal());
   }
 
+  /**
+   * places an order for the current customer
+   *
+   * @param input scanner for input
+   * @param system customer order system
+   */
   private static void makeOrder(Scanner input, CustomerOrderSystem system) {
     System.out.println();
     System.out.println("--- Make Order ---");
@@ -316,6 +367,7 @@ public class Main {
 
     showCart(system);
 
+    System.out.println();
     System.out.println("Select delivery method: ");
     System.out.println("1. Mail ($3.00 fee)");
     System.out.println("2. In store pickup (free)");
@@ -357,7 +409,7 @@ public class Main {
       String newCard = input.nextLine().trim();
 
       if (newCard.equals("0")) {
-        System.out.println("Order Cancelled.");
+        System.out.println("Order cancelled.");
         return;
       }
 
@@ -377,6 +429,11 @@ public class Main {
     }
   }
 
+  /**
+   * displays current customer orders
+   *
+   * @param system customer order system
+   */
   private static void viewOrders(CustomerOrderSystem system) {
     System.out.println();
     System.out.println("--- View Orders ---");
@@ -400,6 +457,11 @@ public class Main {
     }
   }
 
+  /**
+   * prints out details of the order
+   *
+   * @param order order to display
+   */
   private static void printOrder(Order order) {
     System.out.println("Order Date: " + order.getOrderDate());
     System.out.println("Delivery Method: " + order.getDeliveryMethod());
@@ -410,6 +472,7 @@ public class Main {
           item.getProduct().getName(), item.getQuantity(), item.getLineTotal());
     }
 
+    System.out.println();
     System.out.printf("Subtotal: $%.2f%n", order.getSubtotal());
     System.out.printf("Tax: $%.2f%n", order.getTax());
     System.out.printf("Delivery Fee: $%.2f%n", order.getDeliveryFee());
@@ -417,6 +480,12 @@ public class Main {
     System.out.println("Authorization Number: " + order.getAuthNumber());
   }
 
+  /**
+   * helper method to read an int from user input
+   *
+   * @param input scanner for input
+   * @return int entered by customer
+   */
   private static int readInt(Scanner input) {
     while (true) {
       String value = input.nextLine().trim();
@@ -429,6 +498,13 @@ public class Main {
     }
   }
 
+  /**
+   * helper method to read a non blank input from user
+   *
+   * @param prompt message shown to user
+   * @param input scanner for input
+   * @return non blank user input
+   */
   private static String readNonBlank(Scanner input, String prompt) {
     while (true) {
       System.out.print(prompt);

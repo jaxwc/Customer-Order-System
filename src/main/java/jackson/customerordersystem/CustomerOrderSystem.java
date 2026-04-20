@@ -62,7 +62,7 @@ public class CustomerOrderSystem {
    * checks if customer id is available
    *
    * @param customerId customer id to check
-   * @reutrn true if customer exists otherwise return false
+   * @return true if customer exists otherwise return false
    */
   public boolean customerExists(String customerId) {
     return findCustomerById(customerId) != null;
@@ -71,6 +71,7 @@ public class CustomerOrderSystem {
   /**
    * checks if a customer id is available
    *
+   * @param customerId customer id
    * @return true if id is available otherwise return false
    */
   public boolean isCustomerIdAvailable(String customerId) {

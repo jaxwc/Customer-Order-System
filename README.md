@@ -88,4 +88,4 @@ java -cp out jackson.customerordersystem.Main
 - Added addProductToCatalog(Product), getCatalog(), and getShoppingCart() accessors to CustomerOrderSystem for use by the console layer.
 - Added makeOrderWithNewCard(DeliveryMethod, String) to CustomerOrderSystem to handle when the bank declines the card and the customer provides a new one.
 - Removed MAX_LOGIN_ATTEMPTS and failedLoginAttempts from CustomerOrderSystem, login attempt tracking is now in Main.java.
-- The UML reflects these changes.
+- The UML diagram reflects these changes.

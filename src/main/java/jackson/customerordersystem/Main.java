@@ -501,8 +501,8 @@ public class Main {
   /**
    * helper method to read a non blank input from user
    *
-   * @param prompt message shown to user
    * @param input scanner for input
+   * @param prompt message shown to user
    * @return non blank user input
    */
   private static String readNonBlank(Scanner input, String prompt) {

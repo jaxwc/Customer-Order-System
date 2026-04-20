@@ -21,10 +21,6 @@
 
 # How to Compile and Run
 
-Requirements:
-
-- Java 17
-
 ## Terminal
 
 **Compile:**

@@ -1,7 +1,7 @@
 # Project Overview
 
-- This project is a Customer Order System (COS) implemented in java.
-- The program is a console application that lets a customer create an account, log on, log out, browse products from a catalog, select items, place an order, and view previous orders.
+- This project is a Customer Order System (COS) implemented in Java.
+- The project includes a console application and a JavaFX GUI application that let a customer create an account, log on, log out, browse products from a catalog, select items, place an order, and view previous orders.
 
 # Assumptions
 
@@ -24,15 +24,24 @@
 ## Terminal
 
 **Compile:**
-javac -d out src/main/java/jackson/customerordersystem/\*.java
+mvn compile
 
-**Run:**
-java -cp out jackson.customerordersystem.Main
+**Run Console Application:**
+java -cp target/classes jackson.customerordersystem.Main
+
+**Run GUI Application with Maven:**
+mvn javafx:run
 
 ## Intellij IDEA
 
-- Open the project in IntelliJ IDEA and run:
+- Open the project in IntelliJ IDEA and run the console application:
   jackson.customerordersystem.Main
+
+- To run the GUI application, run the Maven goal:
+  javafx:run
+
+- You can also run the JavaFX class directly if IntelliJ has JavaFX configured:
+  jackson.customerordersystem.CustomerOrderSystemGUI
 
 # Implemented use cases
 
@@ -85,3 +94,8 @@ java -cp out jackson.customerordersystem.Main
 - Added makeOrderWithNewCard(DeliveryMethod, String) to CustomerOrderSystem to handle when the bank declines the card and the customer provides a new one.
 - Removed MAX_LOGIN_ATTEMPTS and failedLoginAttempts from CustomerOrderSystem, login attempt tracking is now in Main.java.
 - The UML diagram reflects these changes.
+
+# Part 3 Updates
+
+- Added CustomerOrderSystemGUI.java as a JavaFX GUI application.
+- The GUI demonstrates create account, log on, log out, browse catalog, view cart, make order, and view orders.
